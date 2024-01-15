@@ -1,0 +1,19 @@
+
+`	java:S112$"FDefine and throw a dedicated exception instead of using a generic one.(ÿÅ¯£ıÿÿÿÿ
+E
+java:S37405"/Provide the parametrized type for this generic.(ŒóÍ™
+E
+java:S3740["/Provide the parametrized type for this generic.(äÑ–À
+J
+java:S3740u"/Provide the parametrized type for this generic.(×Á¨ñûÿÿÿÿ
+F
+java:S3740“"/Provide the parametrized type for this generic.(š¥ñó
+K
+java:S3740½"/Provide the parametrized type for this generic.(Ş×–Æıÿÿÿÿ
+n
+java:S3252'"LUse static access with "com.wf.captcha.base.Captcha" for "TYPE_ONLY_NUMBER".(²Ò¶İÿÿÿÿÿ8˜½±1
+]	java:S125+"<This block of commented-out lines of code should be removed.(Ûöë·şÿÿÿÿ8íÒ±1
+X
+java:S2441T"=Make "Account" serializable or don't store it in the session.(õÎÏşÿÿÿÿ
+_
+java:S1128"=Remove this unused import 'com.wf.captcha.ArithmeticCaptcha'.(Â‹ÁÓÿÿÿÿÿ8€Ó±1

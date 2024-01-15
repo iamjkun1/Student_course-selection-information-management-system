@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.dao.XuankeInfoDao">
+
+    <select id="findByCondition" resultType="com.example.entity.XuankeInfo">
+        select * from xuanke_info
+        <where>
+            <if test="teacherId != null and studentId != null">
+                teacherId = #{teacherId} and studentId = #{studentId}
+            </if>
+            <if test="teacherId != null">
+                teacherId = #{teacherId}
+            </if>
+            <if test="studentId != null">
+                studentId = #{studentId}
+            </if>
+        </where>
+    </select>
+
+</mapper>
+
+        <!--mapper层更dao层做映射-->
+        <!--简单的sql可以在dao层做，复杂的要到mapper里完成-->

@@ -1,0 +1,530 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+>
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta http-equiv="pragma" content="no-cache"/>
+    <meta http-equiv="content-type" content="no-cache, must-revalidate"/>
+    <meta http-equiv="expires" content="Wed, 26 Feb 1997 08:21:57 GMT"/>
+    <title>学生信息</title>
+
+    <link href="../css/bootstrap.css" rel="stylesheet"/>
+    <link href="../css/font-awesome.css" rel="stylesheet"/>
+    <link href="../css/custom-styles.css" rel="stylesheet"/>
+    <link href="../css/element/index.css" rel="stylesheet"/>
+
+    <style>
+        [v-cloak] {
+            display: none;
+        }
+
+        .table th, .table td {
+            text-align: center !important;
+            vertical-align: middle !important;
+        }
+    </style>
+</head>
+<body>
+<div id="wrapper" v-cloak>
+    <div class="row">
+        <div class="col-md-12" style="height:60px;">
+            <!-- 顶栏导航 -->
+            <nav class="navbar navbar-default top-navbar" role="navigation">
+                <div class="row">
+                    <div class="col-md-2">
+                        <a class="navbar-brand" style="width:100%; background-color: darkslateblue">
+                            <strong style="font-size: 20px;">学生选课管理信息系统</strong>
+                        </a>
+                    </div>
+                    <div class="col-md-10">
+                        <!-- 用户信息和下拉菜单 -->
+                        <ul class="nav navbar-top-links navbar-right">
+                            <li style="color: white">欢迎您，{{ user.name }}</li>
+                            <li class="dropdown">
+                                <!-- 用户下拉菜单 -->
+                                <a class="dropdown-toggle" data-toggle="dropdown" href="#" aria-expanded="false">
+                                    <i class="fa fa-user fa-fw"></i> <i class="fa fa-caret-down"></i>
+                                </a>
+                                <ul class="dropdown-menu dropdown-user">
+                                    <li><a href="javascript:void(0)" @click="personalPage"><i class="fa fa-user fa-fw"></i> 个人信息</a></li>
+                                    <li class="divider"></li>
+                                    <li><a href="javascript:void(0)" @click="logout"><i class="fa fa-sign-out fa-fw"></i> 退出</a></li>
+                                </ul>
+                            </li>
+                        </ul>
+                        <!-- 顶栏导航链接 -->
+                        <ul class="nav navbar-top-links navbar-right">
+                            <li v-if="user.level === 1"><a href="adminInfo.html">管理员信息</a></li>
+                            <li v-if="user.level === 1"><a href="teacherInfo.html">教师信息</a></li>
+                            <li v-if="user.level === 1"><a href="studentInfo.html">学生信息</a></li>
+                            <li v-if="user.level === 1"><a href="xueyuanInfo.html">学院信息</a></li>
+                            <li v-if="user.level === 1"><a href="zhuanyeInfo.html">专业信息</a></li>
+                            <li><a href="classInfo.html">课程信息</a></li>
+                            <li><a href="xuankeInfo.html">选课信息</a></li>
+                            <li><a href="javascript:void(0)" @click="personalPage">个人信息</a></li>
+                            <li><a href="updatePassword.html"><i class="fa fa-unlock-alt"></i>修改密码</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </nav>
+        </div>
+    </div>
+    <style>
+        .hidden {
+            display: none;
+        }
+    </style>
+    <div class="row">
+        <div class="col-md-2 hidden">
+            <nav id="nav-id" class="navbar-default navbar-side" role="navigation">
+                <div class="sidebar-collapse">
+                    <ul class="nav" id="main-menu">
+
+                        <li>
+                            <a href="#"><i class="fa fa-sitemap"></i> 信息管理<span class="fa arrow"></span></a>
+                            <ul class="nav nav-second-level collapse in">
+                                <li v-if="user.level === 1">
+                                    <a href="adminInfo.html"><i class="fa fa-table sub-icon-mg"
+                                                                aria-hidden="true"></i><span
+                                            class="mini-sub-pro">管理员信息</span></a>
+                                </li>
+                                <li v-if="user.level === 1">
+                                    <a href="teacherInfo.html"><i class="fa fa-table sub-icon-mg"
+                                                                  aria-hidden="true"></i><span
+                                            class="mini-sub-pro">教师信息</span></a>
+                                </li>
+                                <li v-if="user.level === 1">
+                                    <a href="studentInfo.html" class="active-menu"><i class="fa fa-table sub-icon-mg"
+                                                                                      aria-hidden="true"></i><span
+                                            class="mini-sub-pro">学生信息</span></a>
+                                </li>
+                                <li v-if="user.level === 1">
+                                    <a href="xueyuanInfo.html"><i class="fa fa-table sub-icon-mg"
+                                                                  aria-hidden="true"></i><span
+                                            class="mini-sub-pro">学院信息</span></a>
+                                </li>
+                                <li v-if="user.level === 1">
+                                    <a href="zhuanyeInfo.html"><i class="fa fa-table sub-icon-mg"
+                                                                  aria-hidden="true"></i><span
+                                            class="mini-sub-pro">专业信息</span></a>
+                                </li>
+                                <li>
+                                    <a href="classInfo.html"><i class="fa fa-table sub-icon-mg"
+                                                                aria-hidden="true"></i><span
+                                            class="mini-sub-pro">课程信息</span></a>
+                                </li>
+
+                                <li>
+                                    <a href="xuankeInfo.html"><i class="fa fa-table sub-icon-mg" aria-hidden="true"></i><span
+                                            class="mini-sub-pro">选课信息</span></a>
+                                </li>
+
+
+                                <li>
+                                    <a href="javascript:void(0)" @click="personalPage"><i class="fa fa-user"></i>个人信息</a>
+                                </li>
+
+                            </ul>
+                        </li>
+
+                        <li>
+                            <a href="updatePassword.html"><i class="fa fa-unlock-alt"></i>修改密码</a>
+                        </li>
+                        <li>
+                            <a href="javascript:void(0)" @click="logout"><i class="fa fa-power-off"></i>退出登录</a>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+        </div>
+        <div class="col-md-10" style="background-color: #e6e6e6">
+            <div id="page-wrapper">
+                <div id="page-inner">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <h1 class="page-header">
+                                <small>学生信息</small>
+                            </h1>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="panel panel-default" style="background-color: whitesmoke">
+                            <div class="panel-body">
+                                <div class="table-responsive">
+                                    <div class="nx-table-header">
+                                        <button class="btn btn-sm btn-primary" @click="add()">新增</button>
+                                        <input type="text" placeholder="请输入学生名称" v-model="search" @keyup="loadTablePage(1)">
+<!--                                               @keyup="loadTable()">-->
+
+
+                                        <i class="glyphicon glyphicon-search"></i>
+                                        <button class="btn btn-sm btn-primary" @click="exportData()">打印导出</button>
+                                    </div>
+                                    <table class="table table-striped table-bordered table-hover">
+                                        <thead>
+                                        <tr>
+                                            <th>姓名</th>
+                                            <th>性别</th>
+                                            <th>年龄</th>
+                                            <th>学号</th>
+                                            <th>总学分</th>
+                                            <th>所属学院</th>
+                                            <th>操作</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody v-for="obj in tableData">
+                                        <tr>
+                                            <td>{{obj.name}}</td>
+                                            <td>{{obj.sex}}</td>
+                                            <td>{{obj.age}}</td>
+                                            <td>{{obj.code}}</td>
+                                            <td>{{obj.score}}</td>
+                                            <td>{{obj.xueyuanName}}</td>
+                                            <td>
+                                                <button class="btn btn-primary btn-sm" @click="init(obj)">编辑</button>
+                                                <button class="btn btn-danger btn-sm" @click="del(obj.id)">删除</button>
+                                            </td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                    <!--                                    ///分页查询-->
+                                    <nav aria-label="Page. navigation example" style="text-align: right;">
+                                        <ul class=" pagination">
+                                            <li class="page-item" v-bind:class="{disabled: preActive }">
+                                                <a class="page-link" href="javascript:void(0)"
+                                                   v-on:click="loadTablePage(pageInfo.hasPreviousPage? (pageInfo.pageNum - 1) : pageInfo.pageNum)">上一页</a>
+                                            </li>
+                                            <li class="page-item">
+                                                <a class="pag-link" href="javascript:void(0)"
+                                                   v-if="pageInfo.pageNum > 1"
+                                                   v-on:click="loadTablePage(pageInfo.pageNum-1)">{{pageInfo.pageNum - 1}}</a>
+                                            </li>
+                                            <li class="page-item disabled">
+                                                <a class="page-link" aria-disabled="true"
+                                                   href="javascript:void(0)">{{pageInfo.pageNum}}</a>
+                                            </li>
+                                            <li class="page-item">
+                                                <a class="page-link" href="javascript:void(0)"
+                                                   v-if="pageInfo.hasNextPage"
+                                                   v-on:click="loadTablePage(pageInfo.pageNum+1)">{{pageInfo.pageNum + 1}}</a>
+                                            </li>
+                                            <li class="page-item" v-bind:class="{ disabled: nextActive }">
+                                                <a class="age-link" href="javascript:void(0)"
+                                                   v-on:click="loadTablePage(pageInfo.hasNextPage? (pageInfo.pageNum+1) : pageInfo.pageNum)">下一页</a>
+                                            </li>
+                                        </ul>
+                                    </nav>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 模态框（Modal） -->
+    <div class="modal" tabindex="-1" role="dialog" id="mod">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <span class="modal-title">请填写信息</span>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"
+                            @click="entity={sex:'男'}">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form class="form-horizontal">
+                        <input type="hidden" id="id" name="id" v-model="entity.id">
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">姓名</label>
+                            <div class="col-sm-7">
+                                <input type="text" class="form-control" v-model="entity.name" placeholder="请输入姓名">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">性别</label>
+                            <div class="col-sm-7">
+                                <label class="radio-inline">
+                                    <input type="radio" value="男" v-model="entity.sex">男
+                                </label>
+                                <label class="radio-inline">
+                                    <input type="radio" value="女" v-model="entity.sex">女
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">年龄</label>
+                            <div class="col-sm-7">
+                                <input type="text" class="form-control" v-model="entity.age" placeholder="请输入年龄">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">学号</label>
+                            <div class="col-sm-7">
+                                <input type="text" class="form-control" v-model="entity.code" placeholder="请输入学号">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">总学分</label>
+                            <div class="col-sm-7">
+                                <input type="text" class="form-control" v-model="entity.score"
+                                       placeholder="请输入总学分">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">所属学院</label>
+                            <div class="col-sm-7">
+                                <!--                                <select class="form-control" v-model="entity.xueyuanId">-->
+                                <!--&lt;!&ndash;                                    <option v-for="item in xueyuanObjs" : value="item.Id" name="xueyuanId">&ndash;&gt;  ////写多了name="xueyuanId"-->
+                                <!--                                        {{item.name}}-->
+                                <!--                                    </option>-->
+                                <!--                                </select>-->
+                                <!--                                <input type="text" class="form-control" v-model="entity.xueyuanId"-->
+                                <!--                                       placeholder="请输入学院">-->
+                                <select class="form-control" v-model="entity.xueyuanId">
+                                    <option v-for="item in xueyuanObjs" :value="item.id">{{item.name}}</option>
+                                </select>
+                            </div>
+                        </div>
+
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal" @click="entity={sex:'男'}">
+                        关闭
+                    </button>
+                    <button type="button" class="btn btn-primary" @click="update()">保存</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="../js/jquery-1.10.2.js"></script>
+<script src="../js/bootstrap.min.js"></script>
+<script src="../js/jquery.metisMenu.js"></script>
+<script src="../js/custom-scripts.js"></script>
+<script src="../js/my.js"></script>
+<script src="../js/vue2.6.11/vue.min.js"></script>
+<script src="../js/vue2.6.11/axios.js"></script>
+<script src="../js/element/index.js"></script>
+<script src="https://printjs-4de6.kxcdn.com/print.min.js"></script>
+<script src="https://printjs-4de6.kxcdn.com/print.min.css"></script>
+<script>
+    function msg(type, msg) {
+        Vue.prototype.$message({
+            type: type, // success（成功）、warning（警告）, error(错误)
+            message: msg,
+            duration: 2000,
+            offset: 100,
+            center: true
+        })
+    }
+
+    new Vue({
+        el: '#wrapper',
+        data: {
+            user: {},
+            entity: {},   ///对象
+            tableData: [],  //表格数据list
+            xueyuanObjs: [],    ///调用学生表所属学院ID:调用接口赋值给xueyuanObjs展示出来
+            preActive: false,
+            nextActive: false,
+            pageInfo: {},
+            search: null,
+
+        },
+        created: function () {
+            const menuHeight = document.getElementById("main-menu").getElementsByTagName('li').length * 53;
+            const bodyHeight = document.getElementsByTagName("body")[0].clientHeight;
+            document.getElementById("nav-id").style.height = (menuHeight > bodyHeight ? menuHeight : bodyHeight) + 'px';
+            this.user = JSON.parse(localStorage.getItem('user'));
+            // this.loadTable();
+            this.loadTablePage(1);   //显示信息
+            this.loadXueyuan();  //关联学院表数据显示
+
+        },
+        methods: {
+
+            //打印导出所有数据
+            exportData() {
+                axios.get("/studentInfo/all").then(res => {
+                    if (res.data.code === '0') {
+                        printJS({
+                            printable: res.data.data,
+                            properties: [
+                                {
+                                    field: 'name',
+                                    displayName: '姓名',
+                                    columnSize: 1
+                                },
+                                {
+                                    field: 'sex',
+                                    displayName: '性别',
+                                    columnSize: 1
+                                },
+                                {
+                                    field: 'age',
+                                    displayName: '年龄',
+                                    columnSize: 1
+                                },
+                                {
+                                    field: 'code',
+                                    displayName: '学号',
+                                    columnSize: 1
+                                },
+                                {
+                                    field: 'score',
+                                    displayName: '总学分',
+                                    columnSize: 1
+                                },
+                                {
+                                    field: 'xueyuanName',
+                                    displayName: '所属学院',
+                                    columnSize: 1
+                                },
+                            ],
+                            type: 'json',
+                            header: '标题',
+                            // 样式设置
+                            gridStyle: 'border: 2px solid #3971A5;',
+                            gridHeaderStyle: 'color: red;  border: 2px solid #3971A5;'
+                        });
+                    } else {
+                        msg("error", res.data.msg);
+                    }
+                });
+            },
+
+
+            //显示学院信息
+            loadXueyuan() {
+                axios.get("/xueyuanInfo").then(res => {
+                    if (res.data.code === "0") {
+                        this.xueyuanObjs = res.data.data;
+                    } else {
+                        msg("error", res.data.msg);
+                    }
+                })
+            },
+
+           /* loadTable() { //查询所有数据
+                let url = "/studentInfo";
+                if (this.search) {
+                    url = url + "/" + this.search;
+                }
+                axios.get(url).then(res => {
+                    if (res.data.code === '0') {
+                        this.tableData = res.data.data;
+                    } else {
+                        msg("error", res.data.msg);
+                    }
+                })
+            },*/
+
+            loadTablePage(pageNum) { //查询所有数据，包括分页
+
+                if (this.search) {//搜素框分页查询,模糊查询
+                    this.loadTable(pageNum);
+                } else {  //否则查询全部
+                    axios.get("/studentInfo/page?pageNum=" + pageNum + "&pageSize=5").then(res => {
+                        if (res.data.code === '0') {
+                            this.tableData = res.data.data.list;
+                            this.pageInfo = res.data.data;
+                            this.preActive = !res.data.data.hasPreviousPage;
+                            this.nextActive = !res.data.data.hasNextPage;
+                        } else {
+                            msg("error", res.data.msg);
+                        }
+                    })
+                }
+            },
+
+            loadTable(pageNum) {
+                axios.get("/studentInfo/" + this.search + "?pageNum=" + pageNum + "&pageSize=5").then(res => {
+                    if (res.data.code === '0') {
+                        this.tableData = res.data.data.list;
+                        this.pageInfo = res.data.data;
+                        this.preActive = !res.data.data.hasPreviousPage;
+                        this.nextActive = !res.data.data.hasNextPage;
+                    } else {
+                        msg("error", res.data.msg);
+                    }
+                })
+            },
+
+            add() {
+                this.entity = {};   //清空
+                $('#mod').modal("show");
+            },
+
+            init(obj) {
+                this.entity = JSON.parse(JSON.stringify(obj));
+                $('#mod').modal("show");
+
+            },
+
+            update() {
+                if (this.entity.id) {  //编辑
+                    axios.put("/studentInfo", this.entity).then(res => {
+                        if (res.data.code === '0') {
+                            msg("success", "编辑成功");
+                            $('#mod').modal("hide");
+                            this.loadTablePage(1);
+                        } else {
+                            msg("error", res.data.msg);
+                        }
+                    })
+                } else {   //新增
+                    axios.post("/studentInfo", this.entity).then(res => {
+                        if (res.data.code === '0') {
+                            msg("success", "新增成功");
+                            $('#mod').modal("hide");
+                            this.loadTablePage(1);
+                        } else {
+                            msg("error", res.data.msg);
+                        }
+                    })
+                }
+
+            },
+
+            del(id) {
+                let _this = this;
+                this.$confirm('确认删除?', '系统提示', {
+                    confirmButtonText: '确定',
+                    cancelButtonText: '取消',
+                    cancelButtonClass: 'btn-custom-cancel',
+                    type: 'warning'
+                }).then(function () {
+                    // 删除
+                    axios.delete("/studentInfo/" + id).then(res => {
+                        if (res.data.code === '0') {
+                            msg("success", "删除成功");
+                            _this.loadTablePage(1);
+                        } else {
+                            msg("error", res.data.msg);
+                        }
+                    })
+                }).catch(function () {
+                    console.log("取消成功!");
+                })
+            },
+
+            logout() {
+                logout();
+            }
+        }
+    })
+</script>
+</body>
+</html>

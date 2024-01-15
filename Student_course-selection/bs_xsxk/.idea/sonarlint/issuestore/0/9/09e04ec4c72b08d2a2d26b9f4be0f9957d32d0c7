@@ -1,0 +1,12 @@
+
+…
+java:S1192!"cDefine a constant instead of duplicating this literal "ç™»å½•å·²å¤±æ•ˆï¼Œè¯·é‡æ–°ç™»å½•!" 3 times.(ì™Í¡ıÿÿÿÿ8û¥Ã÷Â1
+X	java:S125&"<This block of commented-out lines of code should be removed.(ş§Û·8ß¨Ã÷Â1
+q
+java:S3252X"OUse static access with "com.github.pagehelper.page.PageMethod" for "startPage".(å É°ûÿÿÿÿ8å¨Ã÷Â1
+X	java:S125a"<This block of commented-out lines of code should be removed.(ş§Û·8ë¨Ã÷Â1
+]	java:S125z"<This block of commented-out lines of code should be removed.(¤ßæúüÿÿÿÿ8é¨Ã÷Â1
+r
+java:S3252„"OUse static access with "com.github.pagehelper.page.PageMethod" for "startPage".(å É°ûÿÿÿÿ8ê¨Ã÷Â1
+Y	java:S125‹"<This block of commented-out lines of code should be removed.(—…à8ë¨Ã÷Â1
+Y	java:S125"<This block of commented-out lines of code should be removed.(ş§Û·8ªúÓ÷Â1
